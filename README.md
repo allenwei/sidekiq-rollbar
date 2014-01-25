@@ -1,6 +1,6 @@
 # Sidekiq::Rollbar
 
-TODO: Write a gem description
+Report exception to rollbar with job information
 
 ## Installation
 
