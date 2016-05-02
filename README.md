@@ -18,7 +18,18 @@ Or install it yourself as:
 
 ## Usage
 
-The only thing you need do is configure rollbar described in [rollbar-gem](https://github.com/rollbar/rollbar-gem)
+You need do is configure rollbar described in [rollbar-gem](https://github.com/rollbar/rollbar-gem)
+
+After just add the middleware
+```ruby
+require 'sidekiq-rollbar'
+
+Sidekiq.configure_server do |config|
+  config.server_middleware do |chain|
+    chain.add Sidekiq::Rollbar::Middleware
+  end
+end
+```
 
 ## Contributing
 
