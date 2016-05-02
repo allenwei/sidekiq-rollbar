@@ -10,7 +10,7 @@ module Sidekiq
           payload: msg,
           queue: queue,
           worker: msg['class'],
-          processor:  "#{hostname}:#{process_id}-#{Thread.current.object_id}"
+          processor:  "#{identity}-#{Thread.current.object_id}"
         })
         raise e
       end
