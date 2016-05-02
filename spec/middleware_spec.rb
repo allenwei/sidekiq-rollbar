@@ -1,23 +1,19 @@
 require 'spec_helper'
 
+RSpec.describe Sidekiq::Rollbar::Middleware do
+  subject { Sidekiq::Rollbar::Middleware.new }
 
-describe Sidekiq::Rollbar::Middleware do
+  let!(:exception) { RuntimeError.new }
+  let!(:worker){ double }
 
-  it "should report exception to Rollbar" do
-    exception = RuntimeError.new
-    Rollbar.should_receive(:report_exception).with(exception, hash_including(payload: "message", queue: "default"))
-    expect {
-      Sidekiq::Rollbar::Middleware.new.call(stub, "message", "default") do
-        raise exception
-      end
-    }.to raise_error
-  end
+  it 'should report exception to Rollbar' do
+    expect(Rollbar).to receive(:report_exception).with(
+      exception,
+      hash_including(payload: "message", queue: "default")
+    )
 
-  it "should add middleware into sidekiq queue" do
-    Sidekiq.configure_server do |config|
-      config.server_middleware do |chain|
-        chain.exists?(Sidekiq::Rollbar::Middleware).should be_true
-      end
-    end
+    expect do
+      subject.call(worker, "message", "default") { raise exception }
+    end.to raise_error(RuntimeError)
   end
 end
