@@ -4,6 +4,7 @@
 # loaded once.
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
+require 'sidekiq'
 require 'sidekiq/rollbar'
 
 RSpec.configure do |config|
