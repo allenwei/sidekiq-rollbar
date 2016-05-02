@@ -7,7 +7,7 @@ RSpec.describe Sidekiq::Rollbar::Middleware do
   let!(:worker){ double }
 
   it 'should report exception to Rollbar' do
-    expect(Rollbar).to receive(:report_exception).with(
+    expect(Rollbar).to receive(:log).with(
       exception,
       hash_including(payload: "message", queue: "default")
     )

@@ -6,7 +6,7 @@ module Sidekiq
       def call(worker, msg, queue)
         yield
       rescue Exception => e
-        ::Rollbar.report_exception(e, {
+        ::Rollbar.log(e, {
           payload: msg,
           queue: queue,
           worker: msg['class'],
